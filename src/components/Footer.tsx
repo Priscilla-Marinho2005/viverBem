@@ -6,6 +6,7 @@ import {
 } from '../constants/contact'
 import { FiInstagram, FiMail, FiMapPin, FiPhone } from 'react-icons/fi'
 import { FaFacebookF, FaWhatsapp } from 'react-icons/fa'
+import Reveal from './Reveal'
 
 const NAV_LINKS = [
   { label: 'Início', to: '/' },
@@ -41,7 +42,8 @@ export default function Footer() {
     <footer className="border-t border-white/10 bg-primary text-white">
       <div className="mx-auto w-full max-w-355 px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
-          <div className="sm:col-span-2 lg:col-span-4">
+          <Reveal className="sm:col-span-2 lg:col-span-4">
+          <div>
             <Link to="/" className="inline-block">
               <img
                 src="/logo.png"
@@ -57,11 +59,10 @@ export default function Footer() {
               CRECI: 19286-J
             </p>
           </div>
+          </Reveal>
 
-          <nav
-            className="lg:col-span-2 lg:col-start-6"
-            aria-label="Links do site"
-          >
+          <Reveal delay={80} className="lg:col-span-2 lg:col-start-6">
+          <nav aria-label="Links do site">
             <p className="text-xs font-semibold tracking-[0.2em] text-accent uppercase">
               Navegação
             </p>
@@ -78,8 +79,10 @@ export default function Footer() {
               ))}
             </ul>
           </nav>
+          </Reveal>
 
-          <div className="lg:col-span-4">
+          <Reveal delay={160} className="lg:col-span-4">
+          <div>
             <p className="text-xs font-semibold tracking-[0.2em] text-accent uppercase">
               Contato
             </p>
@@ -116,8 +119,10 @@ export default function Footer() {
               </li>
             </ul>
           </div>
+          </Reveal>
 
-          <div className="lg:col-span-2">
+          <Reveal delay={240} className="lg:col-span-2">
+          <div>
             <p className="text-xs font-semibold tracking-[0.2em] text-accent uppercase">
               Redes
             </p>
@@ -136,6 +141,7 @@ export default function Footer() {
               ))}
             </div>
           </div>
+          </Reveal>
         </div>
       </div>
 

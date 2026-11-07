@@ -1,5 +1,9 @@
-import { useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useEffect, useState, type MouseEvent } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import {
+  scrollToElementById,
+  scrollToTop,
+} from '../utils/smoothScroll'
 import { PHONE_DISPLAY, WHATSAPP_URL } from '../constants/contact'
 import { FiPhone } from 'react-icons/fi'
 import { HiOutlineMenuAlt3 } from 'react-icons/hi'
@@ -13,6 +17,7 @@ const NAV_LINKS = [
 
 export default function Nav() {
   const location = useLocation()
+  const navigate = useNavigate()
   const isHome = location.pathname === '/'
   const [menuOpen, setMenuOpen] = useState(false)
   const [atTop, setAtTop] = useState(true)
@@ -35,6 +40,38 @@ export default function Nav() {
     setMenuOpen(false)
   }
 
+  function handleNavClick(
+    e: MouseEvent<HTMLAnchorElement>,
+    to: (typeof NAV_LINKS)[number]['to'],
+  ) {
+    closeMenu()
+
+    if (to === '/') {
+      e.preventDefault()
+      if (location.pathname !== '/') {
+        navigate('/')
+        window.setTimeout(() => scrollToTop(), 80)
+      } else {
+        scrollToTop()
+      }
+      return
+    }
+
+    const hashIndex = to.indexOf('#')
+    if (hashIndex === -1) return
+
+    const path = to.slice(0, hashIndex) || '/'
+    const sectionId = to.slice(hashIndex + 1)
+
+    if (location.pathname !== path) return
+
+    e.preventDefault()
+    if (location.hash !== `#${sectionId}`) {
+      navigate(to)
+    }
+    scrollToElementById(sectionId)
+  }
+
   const headerShell =
     isHome && atTop && !menuOpen
       ? 'bg-transparent shadow-none'
@@ -45,7 +82,11 @@ export default function Nav() {
       className={`fixed inset-x-0 top-0 z-50 w-full text-white transition-[background-color,box-shadow,backdrop-filter] duration-300 ${headerShell}`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 py-3 sm:gap-4 sm:px-6 sm:py-4 lg:px-8 xl:px-12">
-        <Link to="/" className="min-w-0 shrink-0" onClick={closeMenu}>
+        <Link
+          to="/"
+          className="min-w-0 shrink-0"
+          onClick={(e) => handleNavClick(e, '/')}
+        >
           <img
             src="/logo.png"
             alt="Imobiliária Viver Bem"
@@ -61,6 +102,7 @@ export default function Nav() {
             <Link
               key={link.label}
               to={link.to}
+              onClick={(e) => handleNavClick(e, link.to)}
               className="whitespace-nowrap transition hover:text-accent"
             >
               {link.label}
@@ -101,7 +143,7 @@ export default function Nav() {
               <li key={link.label}>
                 <Link
                   to={link.to}
-                  onClick={closeMenu}
+                  onClick={(e) => handleNavClick(e, link.to)}
                   className="block rounded-lg px-3 py-3 text-sm font-medium tracking-wide transition hover:bg-white/10"
                 >
                   {link.label}

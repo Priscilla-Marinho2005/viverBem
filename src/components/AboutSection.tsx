@@ -1,3 +1,5 @@
+import Reveal from './Reveal'
+
 const PRINCIPLES = ['Transparência', 'Curadoria', 'Atendimento próximo'] as const
 
 export default function AboutSection() {
@@ -6,7 +8,7 @@ export default function AboutSection() {
       id="sobre"
       className="bg-primary py-16 text-white sm:py-20 lg:py-28"
     >
-      <div className="mx-auto w-full max-w-355 px-4 sm:px-6 lg:px-8">
+      <Reveal className="mx-auto w-full max-w-355 px-4 sm:px-6 lg:px-8">
         <p className="text-xs font-semibold tracking-[0.2em] text-accent uppercase">
           Sobre nós
         </p>
@@ -26,7 +28,7 @@ export default function AboutSection() {
         <p className="mt-10 hidden text-sm tracking-wide text-white/50 sm:block">
           {PRINCIPLES.join('  ·  ')}
         </p>
-      </div>
+      </Reveal>
     </section>
   )
 }

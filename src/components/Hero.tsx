@@ -8,6 +8,7 @@ import {
 } from '../constants/heroFilters'
 import FullBleedImage from './FullBleedImage'
 import HeroFilterSelect from './HeroFilterSelect'
+import Reveal from './Reveal'
 
 type FilterId = 'cidade' | 'metragem' | 'quartos'
 
@@ -31,9 +32,10 @@ export default function Hero() {
 
       <div className="relative z-10 flex w-full min-w-0 flex-1 flex-col items-center justify-center px-4 py-6 pt-[calc(5.5rem+env(safe-area-inset-top))] pb-8 sm:px-6 sm:py-8 sm:pt-28">
         <div className="w-full min-w-0 max-w-4xl">
-          <div className="rounded-xl bg-white shadow-2xl shadow-black/25 ring-2 ring-white/90 sm:rounded-2xl lg:rounded-full">
+          <Reveal when="mount" delay={120} variant="up">
+          <div className="overflow-hidden rounded-xl bg-primary shadow-2xl shadow-black/25 sm:rounded-2xl lg:rounded-full">
             <div className="flex flex-col lg:flex-row lg:items-stretch">
-              <div className="relative z-20 flex min-w-0 flex-col divide-y divide-neutral-200 bg-white shadow-[0_0_28px_rgba(255,255,255,0.45)] ring-2 ring-white lg:flex-1 lg:flex-row lg:divide-x lg:divide-y-0 lg:rounded-l-full lg:border-r lg:border-white lg:shadow-[12px_0_24px_rgba(255,255,255,0.35)]">
+              <div className="relative z-20 flex min-w-0 flex-col divide-y divide-neutral-200 bg-white lg:flex-1 lg:flex-row lg:divide-x lg:divide-y-0 lg:border-r lg:border-neutral-200/80">
                 <HeroFilterSelect
                   label="Cidade"
                   placeholder="Selecione a cidade"
@@ -64,13 +66,14 @@ export default function Hero() {
               </div>
               <button
                 type="button"
-                className="relative z-10 flex w-full shrink-0 cursor-pointer items-center justify-center gap-2 bg-primary px-6 py-4 text-sm font-bold tracking-wider text-white uppercase transition hover:bg-primary/90 lg:w-auto lg:rounded-r-full lg:px-8 lg:py-0"
+                className="relative z-30 flex w-full shrink-0 cursor-pointer items-center justify-center gap-2 rounded-none border-0 bg-primary px-6 py-4 text-sm font-bold tracking-wider text-white uppercase outline-none transition hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary lg:w-auto lg:px-8 lg:py-0"
               >
                 <FiSearch className="size-5 shrink-0" aria-hidden />
                 Buscar
               </button>
             </div>
           </div>
+          </Reveal>
         </div>
       </div>
     </section>

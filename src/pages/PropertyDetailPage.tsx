@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import { FiArrowLeft, FiMapPin } from 'react-icons/fi'
 import { IoBedOutline } from 'react-icons/io5'
 import { PiBathtub, PiCar, PiCornersOut } from 'react-icons/pi'
+import Reveal from '../components/Reveal'
 import { getPropertyById } from '../data/properties'
 import { whatsAppUrlWithText } from '../constants/contact'
 
@@ -45,6 +46,7 @@ export default function PropertyDetailPage() {
   return (
     <main className="bg-surface pb-16 pt-[calc(5rem+env(safe-area-inset-top))] sm:pt-28">
       <div className="mx-auto w-full max-w-355 px-4 sm:px-6 lg:px-8">
+        <Reveal key={`back-${id}`} when="mount" delay={0}>
         <Link
           to="/#imoveis"
           className="inline-flex items-center gap-2 text-sm font-medium text-primary transition hover:text-accent"
@@ -52,9 +54,11 @@ export default function PropertyDetailPage() {
           <FiArrowLeft className="size-4" aria-hidden />
           Voltar aos imóveis
         </Link>
+        </Reveal>
 
         <div className="mt-6 grid gap-8 lg:grid-cols-5 lg:gap-10">
-          <div className="min-w-0 lg:col-span-3">
+          <Reveal key={`gallery-${id}`} when="mount" delay={80} className="min-w-0 lg:col-span-3">
+          <div className="min-w-0">
             <div className="overflow-hidden rounded-2xl bg-neutral-100 ring-1 ring-neutral-200/80">
               <img
                 src={property.images[activeImage] ?? property.image}
@@ -86,8 +90,10 @@ export default function PropertyDetailPage() {
               </div>
             )}
           </div>
+          </Reveal>
 
-          <div className="min-w-0 lg:col-span-2">
+          <Reveal key={`info-${id}`} when="mount" delay={160} variant="right" className="min-w-0 lg:col-span-2">
+          <div className="min-w-0">
             <p className="text-xs font-semibold tracking-[0.2em] text-accent uppercase">
               Imóvel em destaque
             </p>
@@ -151,9 +157,11 @@ export default function PropertyDetailPage() {
               Falar no WhatsApp
             </a>
           </div>
+          </Reveal>
         </div>
 
-        <section className="mt-14 sm:mt-16" aria-labelledby="ficha-tecnica">
+        <Reveal className="mt-14 sm:mt-16">
+        <section aria-labelledby="ficha-tecnica">
           <h2
             id="ficha-tecnica"
             className="text-xl font-bold text-primary sm:text-2xl"
@@ -176,8 +184,10 @@ export default function PropertyDetailPage() {
             </dl>
           </div>
         </section>
+        </Reveal>
 
-        <section className="mt-14 sm:mt-16" aria-labelledby="plantas">
+        <Reveal delay={100} className="mt-14 sm:mt-16">
+        <section aria-labelledby="plantas">
           <h2
             id="plantas"
             className="text-xl font-bold text-primary sm:text-2xl"
@@ -203,6 +213,7 @@ export default function PropertyDetailPage() {
             ))}
           </div>
         </section>
+        </Reveal>
       </div>
     </main>
   )

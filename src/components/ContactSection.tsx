@@ -1,6 +1,7 @@
 import { type FormEvent, useState } from 'react'
 import { HERO_BG_IMAGE } from '../constants/background'
 import FullBleedImage from './FullBleedImage'
+import Reveal from './Reveal'
 import { whatsAppUrlWithText } from '../constants/contact'
 import {
   digitsOnlyPhone,
@@ -42,13 +43,14 @@ export default function ContactSection() {
       id="contato"
       className="relative isolate overflow-hidden py-12 text-white sm:py-14 lg:py-16"
     >
-      <FullBleedImage src={HERO_BG_IMAGE} className="z-0" />
+      <FullBleedImage src={HERO_BG_IMAGE} fixedOnDesktop />
       <div
         className="pointer-events-none absolute inset-0 z-0 bg-linear-to-b from-primary/30 via-primary/55 to-primary/30"
         aria-hidden
       />
 
       <div className="relative z-10 mx-auto grid w-full min-w-0 max-w-345 gap-8 px-4 sm:gap-10 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-14 lg:px-8">
+        <Reveal variant="left">
         <div>
           <h2 className="text-2xl font-bold sm:text-3xl lg:text-3xl">
             Entre em contato conosco
@@ -58,7 +60,9 @@ export default function ContactSection() {
             você
           </p>
         </div>
+        </Reveal>
 
+        <Reveal delay={120} variant="right">
         <form
           onSubmit={handleSubmit}
           className="mx-auto w-full min-w-0 max-w-lg rounded-sm bg-white p-5 shadow-xl shadow-black/20 sm:p-8 lg:mx-0 lg:ml-auto"
@@ -138,6 +142,7 @@ export default function ContactSection() {
             Enviar mensagem
           </button>
         </form>
+        </Reveal>
       </div>
     </section>
   )

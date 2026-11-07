@@ -3,6 +3,7 @@ import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 import { PROPERTIES } from '../data/properties'
 import { useItemsPerPage } from '../hooks/useItemsPerPage'
 import PropertyCard from './PropertyCard'
+import Reveal from './Reveal'
 
 const SWIPE_THRESHOLD_PX = 48
 
@@ -92,7 +93,7 @@ export default function PropertiesSection() {
       className="bg-surface py-14 sm:py-16 lg:py-20"
     >
       <div className="mx-auto w-full max-w-355 px-4 sm:px-6 lg:px-8">
-        <div className="mb-8 flex flex-col gap-4 min-[480px]:flex-row min-[480px]:items-end min-[480px]:justify-between sm:mb-10">
+        <Reveal className="mb-8 flex flex-col gap-4 min-[480px]:flex-row min-[480px]:items-end min-[480px]:justify-between sm:mb-10">
           <div className="min-w-0">
             <p className="text-xs font-semibold tracking-[0.2em] text-accent uppercase">
               Portfólio
@@ -125,8 +126,9 @@ export default function PropertiesSection() {
               <FiChevronRight className="size-5" />
             </button>
           </div>
-        </div>
+        </Reveal>
 
+        <Reveal delay={100}>
         <div
           className="overflow-hidden touch-pan-y"
           onTouchStart={handleTouchStart}
@@ -158,6 +160,7 @@ export default function PropertiesSection() {
             })}
           </div>
         </div>
+        </Reveal>
       </div>
     </section>
   )
