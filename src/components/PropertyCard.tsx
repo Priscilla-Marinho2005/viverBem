@@ -47,6 +47,7 @@ export default function PropertyCard({ property }: { property: Property }) {
       </Link>
       <div className="flex min-h-0 flex-1 flex-col gap-3 p-4 sm:p-5">
         <div>
+          <p className="text-xs text-neutral-500 sm:text-sm">A partir de</p>
           <p className="text-lg font-semibold text-primary">{property.price}</p>
           <h3 className="mt-1 line-clamp-2 text-base font-medium leading-snug text-neutral-800">
             {property.title}
