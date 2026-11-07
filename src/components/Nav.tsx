@@ -72,7 +72,7 @@ export default function Nav() {
           href={WHATSAPP_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="hidden min-w-0 items-center gap-1.5 text-xs font-medium uppercase tracking-wide transition hover:text-accent min-[400px]:flex xl:text-sm"
+          className="hidden min-w-0 items-center gap-1.5 text-sm font-medium uppercase tracking-wide transition hover:text-accent lg:flex"
         >
           <FiPhone className="size-3.5 shrink-0 text-accent" aria-hidden />
           <span className="truncate max-xl:max-w-38 xl:max-w-none">
@@ -82,7 +82,7 @@ export default function Nav() {
 
         <button
           type="button"
-          className="ml-1 shrink-0 rounded-lg p-2 text-white lg:hidden"
+          className="ml-auto shrink-0 rounded-lg p-2 text-white lg:hidden"
           aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((o) => !o)}

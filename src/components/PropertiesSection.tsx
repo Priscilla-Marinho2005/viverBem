@@ -1,13 +1,22 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 import { PROPERTIES } from '../data/properties'
 import { useItemsPerPage } from '../hooks/useItemsPerPage'
 import PropertyCard from './PropertyCard'
 
+const SWIPE_THRESHOLD_PX = 48
+
 export default function PropertiesSection() {
   const itemsPerPage = useItemsPerPage()
   const totalPages = Math.max(1, Math.ceil(PROPERTIES.length / itemsPerPage))
   const [page, setPage] = useState(0)
+  const [dragOffset, setDragOffset] = useState(0)
+  const [isDragging, setIsDragging] = useState(false)
+
+  const touchStartX = useRef(0)
+  const touchStartY = useRef(0)
+  const dragOffsetRef = useRef(0)
+  const swipeAxis = useRef<'none' | 'x' | 'y'>('none')
 
   useEffect(() => {
     setPage((current) => Math.min(current, totalPages - 1))
@@ -21,6 +30,60 @@ export default function PropertiesSection() {
       if (direction === 'left') return Math.max(0, current - 1)
       return Math.min(totalPages - 1, current + 1)
     })
+  }
+
+  function applyDragOffset(deltaX: number) {
+    let offset = deltaX
+    if ((page === 0 && deltaX > 0) || (page === totalPages - 1 && deltaX < 0)) {
+      offset = deltaX * 0.3
+    }
+    dragOffsetRef.current = offset
+    setDragOffset(offset)
+  }
+
+  function endSwipe() {
+    const offset = dragOffsetRef.current
+    if (offset < -SWIPE_THRESHOLD_PX && canGoRight) goTo('right')
+    else if (offset > SWIPE_THRESHOLD_PX && canGoLeft) goTo('left')
+
+    swipeAxis.current = 'none'
+    setIsDragging(false)
+    dragOffsetRef.current = 0
+    setDragOffset(0)
+  }
+
+  function handleTouchStart(e: React.TouchEvent) {
+    if (e.touches.length !== 1) return
+    touchStartX.current = e.touches[0].clientX
+    touchStartY.current = e.touches[0].clientY
+    swipeAxis.current = 'none'
+    setIsDragging(true)
+    dragOffsetRef.current = 0
+    setDragOffset(0)
+  }
+
+  function handleTouchMove(e: React.TouchEvent) {
+    if (e.touches.length !== 1) return
+    const deltaX = e.touches[0].clientX - touchStartX.current
+    const deltaY = e.touches[0].clientY - touchStartY.current
+
+    if (swipeAxis.current === 'none') {
+      const absX = Math.abs(deltaX)
+      const absY = Math.abs(deltaY)
+      if (absX < 8 && absY < 8) return
+      swipeAxis.current = absX > absY ? 'x' : 'y'
+    }
+
+    if (swipeAxis.current !== 'x') return
+    applyDragOffset(deltaX)
+  }
+
+  function handleTouchEnd() {
+    if (swipeAxis.current === 'x') endSwipe()
+    else {
+      setIsDragging(false)
+      swipeAxis.current = 'none'
+    }
   }
 
   return (
@@ -64,10 +127,18 @@ export default function PropertiesSection() {
           </div>
         </div>
 
-        <div className="overflow-hidden">
+        <div
+          className="overflow-hidden touch-pan-y"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          onTouchCancel={handleTouchEnd}
+        >
           <div
-            className="flex transition-transform duration-500 ease-out"
-            style={{ transform: `translateX(-${page * 100}%)` }}
+            className={`flex ease-out ${isDragging ? 'transition-none' : 'transition-transform duration-500'}`}
+            style={{
+              transform: `translateX(calc(-${page * 100}% + ${dragOffset}px))`,
+            }}
           >
             {Array.from({ length: totalPages }, (_, pageIndex) => {
               const items = PROPERTIES.slice(

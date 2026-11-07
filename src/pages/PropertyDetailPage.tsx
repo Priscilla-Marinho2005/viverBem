@@ -59,7 +59,8 @@ export default function PropertyDetailPage() {
               <img
                 src={property.images[activeImage] ?? property.image}
                 alt={`${property.title} — foto ${activeImage + 1}`}
-                className="aspect-4/3 w-full object-cover sm:aspect-16/10"
+                className="aspect-4/3 w-full object-cover object-center sm:aspect-16/10"
+                decoding="async"
               />
             </div>
             {property.images.length > 1 && (

@@ -40,8 +40,9 @@ export default function PropertyCard({ property }: { property: Property }) {
         <img
           src={property.image}
           alt={property.title}
-          className="size-full object-cover transition duration-300 hover:scale-[1.03]"
+          className="size-full object-cover object-center transition duration-300 hover:scale-[1.03]"
           loading="lazy"
+          decoding="async"
         />
       </Link>
       <div className="flex min-h-0 flex-1 flex-col gap-3 p-4 sm:p-5">

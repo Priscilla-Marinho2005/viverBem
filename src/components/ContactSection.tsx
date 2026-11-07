@@ -1,5 +1,6 @@
 import { type FormEvent, useState } from 'react'
 import { HERO_BG_IMAGE } from '../constants/background'
+import FullBleedImage from './FullBleedImage'
 import { whatsAppUrlWithText } from '../constants/contact'
 import {
   digitsOnlyPhone,
@@ -41,11 +42,7 @@ export default function ContactSection() {
       id="contato"
       className="relative isolate overflow-hidden py-12 text-white sm:py-14 lg:py-16"
     >
-      <div
-        className="pointer-events-none absolute inset-0 z-0 bg-cover bg-center bg-no-repeat max-md:bg-scroll md:bg-fixed"
-        style={{ backgroundImage: `url(${HERO_BG_IMAGE})` }}
-        aria-hidden
-      />
+      <FullBleedImage src={HERO_BG_IMAGE} className="z-0" />
       <div
         className="pointer-events-none absolute inset-0 z-0 bg-linear-to-b from-primary/30 via-primary/55 to-primary/30"
         aria-hidden
